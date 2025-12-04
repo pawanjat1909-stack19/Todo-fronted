@@ -3,14 +3,16 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 
-export default function AddTask() {
+export default function AddTask({token}) {
     const [taskData,setTaskData]=useState({title:"",description:""});
     const navigate= useNavigate();
-
+const axiosConfig = {
+  headers: { Authorization: `Bearer ${token}` },
+};
   const handleAddTask = async () => {
     try {
       console.log("Sending task:", taskData);
-      const result = await axios.post("http://localhost:3200/add-task", taskData);
+      const result = await axios.post("http://localhost:3200/add-task", taskData,axiosConfig);
       console.log("Response:", result.data);
      
       if (result.data.success) {
